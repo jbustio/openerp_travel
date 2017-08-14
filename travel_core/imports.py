@@ -20,10 +20,10 @@
 ##############################################################################
 
 import xlrd, base64, datetime, timeit
-from openerp.exceptions import except_orm
-from openerp import fields, api
-from openerp.models import TransientModel
-from openerp.tools.translate import _
+from odoo.exceptions import except_orm
+from odoo import fields, api
+from odoo.models import TransientModel
+from odoo.tools.translate import _
 
 BASE_DATE = 693594
 

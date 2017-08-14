@@ -1,5 +1,5 @@
-from openerp.models import TransientModel
-from openerp import api
+from odoo.models import TransientModel
+from odoo import api
 import time
 
 

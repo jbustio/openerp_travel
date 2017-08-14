@@ -20,10 +20,10 @@
 ##############################################################################
 
 import xlrd
-from openerp.exceptions import except_orm
-from openerp import api, fields
-from openerp.models import TransientModel
-from openerp.tools.translate import _
+from odoo.exceptions import except_orm
+from odoo import api, fields
+from odoo.models import TransientModel
+from odoo.tools.translate import _
 
 
 class import_hotel(TransientModel):

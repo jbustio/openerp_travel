@@ -20,10 +20,10 @@
 ##############################################################################
 
 import datetime as dt
-from openerp import fields, api
-from openerp.models import Model
-from openerp.osv.osv import except_osv
-from openerp.tools.translate import _
+from odoo import fields, api
+from odoo.models import Model
+from odoo.osv.osv import except_osv
+from odoo.tools.translate import _
 
 
 class res_partner(Model):

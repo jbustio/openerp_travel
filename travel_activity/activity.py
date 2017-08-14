@@ -19,8 +19,8 @@
 #
 ##############################################################################
 
-from openerp.osv import fields
-from openerp.osv.orm import Model
+from odoo.osv import fields
+from odoo.osv.orm import Model
 
 
 class product_activity(Model):

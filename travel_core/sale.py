@@ -23,11 +23,11 @@ import time
 import simplejson
 import datetime as dt
 from lxml import etree
-from openerp import fields, api, exceptions
-from openerp.models import Model, TransientModel
-from openerp.exceptions import except_orm
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DF
-from openerp.tools.translate import _
+from odoo import fields, api, exceptions
+from odoo.models import Model, TransientModel
+from odoo.exceptions import except_orm
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
+from odoo.tools.translate import _
 import openerp.addons.decimal_precision as dp
 
 
@@ -588,7 +588,7 @@ class sale_order_line(Model):
     #     return super(sale_order_line, self).create(vals)
 
     def __init__(self, cr, uid):
-        from openerp.addons.sale.sale import sale_order_line
+        from odoo.addons.sale.sale import sale_order_line
         states = sale_order_line._columns['state'].selection
         try:
             states.remove(('request', 'Request!'))

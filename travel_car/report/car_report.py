@@ -19,9 +19,9 @@
 #
 ##############################################################################
 
-from openerp import tools
-from openerp.models import Model
-from openerp import fields
+from odoo import tools
+from odoo.models import Model
+from odoo import fields
 
 
 # class sale_report(Model):

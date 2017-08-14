@@ -9,17 +9,17 @@ import operator
 import psycopg2
 import re
 from ast import literal_eval
-from openerp.tools import mute_logger
+from odoo.tools import mute_logger
 
 # Validation Library https://pypi.python.org/pypi/validate_email/1.1
 
 from validate_email import validate_email
 
 import openerp
-from openerp.osv import osv, orm
-from openerp.osv import fields
-from openerp.osv.orm import browse_record
-from openerp.tools.translate import _
+from odoo.osv import osv, orm
+from odoo.osv import fields
+from odoo.osv.orm import browse_record
+from odoo.tools.translate import _
 
 pattern = re.compile("&(\w+?);")
 

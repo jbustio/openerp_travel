@@ -1,11 +1,11 @@
 import werkzeug
 
-from openerp import SUPERUSER_ID
-from openerp import http
-from openerp.http import request
-from openerp.tools.translate import _
-from openerp.addons.website.models.website import slug
-from openerp.addons.web.controllers.main import login_redirect
+from odoo import SUPERUSER_ID
+from odoo import http
+from odoo.http import request
+from odoo.tools.translate import _
+from odoo.addons.website.models.website import slug
+from odoo.addons.web.controllers.main import login_redirect
 import simplejson
 import datetime
 from dateutil import parser

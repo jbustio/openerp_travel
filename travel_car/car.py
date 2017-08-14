@@ -20,10 +20,10 @@
 ##############################################################################
 
 import datetime as dt
-from openerp import fields, api
-from openerp.models import Model
-from openerp.tools.translate import _
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DF
+from odoo import fields, api
+from odoo.models import Model
+from odoo.tools.translate import _
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 
 class product_car(Model):

@@ -19,8 +19,8 @@
 #
 ##############################################################################
 
-from openerp.models import Model
-from openerp import api
+from odoo.models import Model
+from odoo import api
 
 
 class account_invoice(Model):

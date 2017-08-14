@@ -19,10 +19,10 @@
 #
 ##############################################################################
 
-from openerp.osv import fields
+from odoo.osv import fields
 import openerp.osv as osv
-from openerp.tools.translate import _
-from openerp import tools
+from odoo.tools.translate import _
+from odoo import tools
 
 
 class package_report(osv.osv.osv):

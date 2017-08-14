@@ -1,9 +1,9 @@
 import requests
 from lxml import etree
 
-from openerp import models, fields, api
-from openerp.tools.translate import _
-from openerp.exceptions import except_orm
+from odoo import models, fields, api
+from odoo.tools.translate import _
+from odoo.exceptions import except_orm
 import time
 
 

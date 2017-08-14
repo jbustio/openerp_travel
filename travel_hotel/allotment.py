@@ -21,9 +21,9 @@
 
 import datetime as dt
 
-from openerp.osv import fields, osv
-from openerp.osv.orm import Model
-from openerp.tools import DEFAULT_SERVER_DATE_FORMAT as DF
+from odoo.osv import fields, osv
+from odoo.osv.orm import Model
+from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 
 class product_supplierinfo(Model):

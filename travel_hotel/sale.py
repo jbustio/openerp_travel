@@ -22,8 +22,8 @@
 import simplejson
 from lxml import etree
 
-from openerp import fields, api
-from openerp.models import Model
+from odoo import fields, api
+from odoo.models import Model
 
 
 class sale_order(Model):

@@ -19,10 +19,10 @@
 #
 ##############################################################################
 
-from openerp import tools
-from openerp.osv import fields
-from openerp.osv.orm import Model
-from openerp.tools.translate import _
+from odoo import tools
+from odoo.osv import fields
+from odoo.osv.orm import Model
+from odoo.tools.translate import _
 
 
 class sale_report(Model):

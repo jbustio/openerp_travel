@@ -25,11 +25,11 @@ import datetime as dt
 from lxml import etree
 import importlib
 import openerp
-from openerp import api as api_odoo
-from openerp import fields, exceptions
-from openerp.models import Model
-from openerp.exceptions import except_orm
-from openerp.tools.translate import _
+from odoo import api as api_odoo
+from odoo import fields, exceptions
+from odoo.models import Model
+from odoo.exceptions import except_orm
+from odoo.tools.translate import _
 
 apis = ['best_day']
 

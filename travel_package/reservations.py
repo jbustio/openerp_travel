@@ -19,9 +19,9 @@
 #
 ##############################################################################
 
-from openerp import fields, api
-from openerp.models import Model
-from openerp.tools.translate import _
+from odoo import fields, api
+from odoo.models import Model
+from odoo.tools.translate import _
 
 
 # TODO: Optimizar esto con sql

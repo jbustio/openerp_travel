@@ -24,10 +24,10 @@ import simplejson
 import openerp
 import datetime as dt
 from lxml import etree
-from openerp import fields, api, exceptions
-from openerp.models import Model
-from openerp.exceptions import except_orm
-from openerp.tools.translate import _
+from odoo import fields, api, exceptions
+from odoo.models import Model
+from odoo.exceptions import except_orm
+from odoo.tools.translate import _
 
 
 class sale_order(Model):

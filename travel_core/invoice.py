@@ -19,8 +19,8 @@
 #
 ##############################################################################
 
-from openerp.models import Model
-from openerp.exceptions import except_orm
+from odoo.models import Model
+from odoo.exceptions import except_orm
 
 
 class account_invoice(Model):
