@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
     <data>
         <template id="ecommerce_assets_frontend" inherit_id="website_sale.assets_frontend" name="Comely Shop">
             <xpath expr="." position="inside">
@@ -64,4 +64,4 @@
             </xpath>
         </template>
     </data>
-</openerp>
+</odoo>

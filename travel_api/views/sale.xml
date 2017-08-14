@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
     <data>
         <record id="travel_api_sale_order_line_form_view" model="ir.ui.view">
             <field name="name">travel.api.sale.order.line.form.view</field>
@@ -27,4 +27,4 @@
             </field>
         </record>
     </data>
-</openerp>
+</odoo>

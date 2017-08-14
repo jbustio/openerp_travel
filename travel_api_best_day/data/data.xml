@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data noupdate="1">
         <record model="api.model" id="api_model_best_day">
             <field name="api">best_day</field>
@@ -18,4 +18,4 @@
         <function name="get_countries" model="api.best.day">
                 </function>
     </data>
-</openerp>
+</odoo>

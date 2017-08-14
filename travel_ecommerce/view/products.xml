@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
     <data>
         <record id="travel_product_category_tree_view" model="ir.ui.view">
             <field name="name">travel.product.category.tree.view</field>
@@ -26,4 +26,4 @@
         <menuitem action="website_sale.product_public_category_action" id="travel_menu_product_public_category"
                   parent="base.menu_base_config" sequence="10"/>
     </data>
-</openerp>
+</odoo>

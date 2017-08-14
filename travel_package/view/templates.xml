@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
     <data>
         <template id="package_form">
             <form action="/search" method="post" class="">
@@ -28,4 +28,4 @@
             </form>
         </template>
     </data>
-</openerp>
+</odoo>

@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
     <data>
 
         <menuitem id='travel_api_root_menu' name='External API' parent='base.menu_base_partner' sequence="25"/>
@@ -50,4 +50,4 @@
         </record>
 
     </data>
-</openerp>
+</odoo>

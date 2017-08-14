@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
     <data>
 
         <!-- Orders -->
@@ -554,4 +554,4 @@
                   parent="travel_reservations_menu" sequence="1"/>
 
     </data>
-</openerp>
+</odoo>

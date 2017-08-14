@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<openerp>
+<odoo>
     <data>
         <template id="flight_form">
             <form action="/search" method="POST" class="">
@@ -22,4 +22,4 @@
 
         </template>
     </data>
-</openerp>
+</odoo>

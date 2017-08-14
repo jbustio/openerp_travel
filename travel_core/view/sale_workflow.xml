@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
         <!-- Activity -->
         <record id="act_editable" model="workflow.activity">
@@ -20,4 +20,4 @@
             <field name="signal">go_to_invoice_except</field>
         </record>
     </data>
-</openerp>
+</odoo>

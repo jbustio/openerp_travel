@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<openerp>
+<odoo>
     <data>
         <template id="report_sale_layouted" inherit_id="sale.report_saleorder_document">
             <xpath expr="//div[@id='informations'][1]" position="replace">
@@ -70,4 +70,4 @@
             </xpath>
         </template>
     </data>
-</openerp>
+</odoo>
