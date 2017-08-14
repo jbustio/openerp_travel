@@ -30,7 +30,7 @@ class sale_order(Model):
     _name = 'sale.order'
     _inherit = 'sale.order'
 
-    @api.one
+    @api.multi
     def copy(self):
         res = super(sale_order, self).copy()
         category_table = self.env['product.category']
