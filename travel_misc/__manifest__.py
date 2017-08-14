@@ -21,7 +21,7 @@
 
 {
     "name": "Travel Agency - Miscellaneous",
-    "version": "0.1",
+    "version": "10.0.1.0.0",
     "author": "OpenJAF",
     "website": "http://www.openjaf.com",
     "category": "Sales",
