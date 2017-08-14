@@ -22,7 +22,7 @@
 {
     "name": "Travel Agency - Core",
     "version": "10.0.1.0.0",
-    "author": "OpenJAF.",
+    "author": "OpenJAF",
     "website": "http://www.openjaf.com",
     "category": "Sales",
     "description": """
