@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-import xlrd, base64, datetime, timeit
+import xlrd, base64, datetime
 from odoo.exceptions import except_orm
 from odoo import fields, api
 from odoo.models import TransientModel
