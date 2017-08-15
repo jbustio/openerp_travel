@@ -31,6 +31,137 @@ from odoo.tools.translate import _
 import odoo.addons.decimal_precision as dp
 
 
+class sale_context(models.Model):
+    _name = 'sale.context'
+
+    @api.multi
+    def _get_paxs(self):
+        result = {}
+        for obj in self:
+            result[obj.id] = obj.adults + obj.children
+        return result
+
+    @api.multi
+    def _get_duration(self):
+        result = {}
+        for obj in self:
+            result[obj.id] = 1
+            if obj.end_date:
+                dsdate = dt.datetime.strptime(obj.start_date, DF)
+                dedate = dt.datetime.strptime(obj.end_date, DF)
+                result[obj.id] = (dedate - dsdate).days
+        return result
+
+    category_id = fields.Many2one('product.category', _('Category'))
+    category = fields.Char(_('Category'), size=64)
+    start_date = fields.Date(_('Start Date'))
+    end_date = fields.Date(_('End Date'))
+    duration = fields.Float(compute=_get_duration, method=True, type='float', string=_('Duration'))
+    adults = fields.Integer(_('Adults'))
+    children = fields.Integer(_('Children'))
+    start_time = fields.Char(_('Start Time'), size=64)
+    start_place = fields.Char(_('Start Place'), size=255)
+    end_time = fields.Char(_('End Time'), size=64)
+    end_place = fields.Char(_('End Place'), size=255)
+    supplier_id = fields.Many2one('res.partner', _('Supplier'), domain="[('supplier', '=', True)]")
+    reservation_number = fields.Char(_('Reservation'), size=64)
+    paxs = fields.Integer(compute=_get_paxs, method=True, string=_('Paxs'), store=True)
+
+    def get_supplier(self, obj):
+        if obj.supplier_id:
+            return obj.supplier_id
+        elif obj.product_id.seller_id:
+            return obj.product_id.seller_id
+        else:
+            raise except_orm(_('Error!'),
+                             _("There is at least one sale order line without supplier"))
+
+    def get_supplier_info_id(self, cr, uid, obj, context=None):
+        supplierinfo_obj = self.pool.get('product.supplierinfo')
+        supplier = self.get_supplier(obj)
+        to_search = [
+            ('name', '=', supplier.id),
+            ('product_id', '=', obj.product_id.product_tmpl_id.id)
+        ]
+        sinfo = supplierinfo_obj.search(cr, uid, to_search, context=context)
+        return sinfo and sinfo[0] or False
+
+    def get_context_fields(self, cr, uid, context=None):
+        context_fields = {}
+        categ = self.pool.get('product.category')
+        categ_ids = categ.search(cr, uid, [('type', '=', 'normal')],
+                                 context=context)
+        categs = [c['name'] for c in categ.read(cr, uid, categ_ids, ['name'])]
+        for f, v in self.fields_get(cr, uid).items():
+            if f.split('_')[0].capitalize() in categs:
+                context_fields[f] = v
+        return context_fields
+
+    def get_context_params(self, cr, uid, line, context=None):
+        context_params = {}
+        fields = self.get_context_fields(cr, uid, context)
+        for f in fields:
+            if hasattr(line, f):
+                value = getattr(line, f)
+                if value:
+                    if fields[f]['type'] == 'many2one':
+                        context_params.update({f: value.id})
+                    else:
+                        context_params.update({f: value})
+        return context_params
+
+    def update_view_with_context_fields(self, cr, uid, res, context=None, flag=True):
+        new_fields = self.get_context_fields(cr, uid, context)
+        res['fields'].update(new_fields)
+        doc = etree.XML(res['arch'])
+        field_names = ['end_date', 'adults', 'children', 'sale_line_supplement_ids', 'supplier_id', 'product_id']
+        parent_node = doc.xpath("//group[@name='dynamic_fields']")
+        if parent_node:
+            parent_node = parent_node[0]
+            sd = doc.xpath("//field[@name='start_date']")[0]
+            ocg = sd.get('on_change', False)
+            ctx = sd.get('context', False)
+            if flag:
+                ctx = self._build_ctx(ctx, new_fields)
+            sd.set('context', ctx)
+            for field in field_names:
+                if field == 'sale_line_supplement_ids':
+                    try:
+                        ed = doc.xpath("//field[@name='" + field + "']")[0]
+                        ed.set('context', ctx)
+                    except IndexError:
+                        field = 'product_package_supplement_ids'
+                ed = doc.xpath("//field[@name='" + field + "']")[0]
+                ed.set('context', ctx)
+
+            keys = new_fields.keys()
+            keys.sort()
+            for f in keys:
+                n = etree.Element("field")
+                n.set('name', f)
+                modifiers = self._build_attr(cr, uid, f)
+                n.set('modifiers', simplejson.dumps(modifiers))
+                trigger = ", 'trigger': " + f + "}"
+                ctx_trigger = ctx[::-1].replace('}', trigger[::-1], 1)[::-1]
+                n.set('context', ctx_trigger)
+                n.set('on_change', ocg)
+                parent_node.append(n)
+            res['arch'] = etree.tostring(doc)
+        return res
+
+    def _build_attr(self, cr, uid, field):
+        category = field.split('_')[0].capitalize()
+        category_obj = self.pool.get('product.category')
+        category_id = category_obj.search(cr, uid, [('name', '=', category)])
+        return {'invisible': [('category_id', '!=', category_id[0])]}
+
+    def _build_ctx(self, base, fields):
+        body = ''
+        for f in fields:
+            body += ", '" + f + "': " + f
+        first, last = base.split("'end_date': end_date")
+        return first + "'end_date': end_date" + body + last
+
 class tmp_sale_order_line_package_line_conf(TransientModel):
     _name = 'tmp.sale.order.line.package.line.conf'
     _inherits = {'sale.context': 'sale_context_id'}
@@ -418,139 +549,6 @@ class sale_order(models.Model):
         if self.date_order > self.end_date:
             self.end_date = self.date_order
 
-
-class sale_context(models.Model):
-    _name = 'sale.context'
-
-    @api.multi
-    def _get_paxs(self):
-        result = {}
-        for obj in self:
-            result[obj.id] = obj.adults + obj.children
-        return result
-
-    @api.multi
-    def _get_duration(self):
-        result = {}
-        for obj in self:
-            result[obj.id] = 1
-            if obj.end_date:
-                dsdate = dt.datetime.strptime(obj.start_date, DF)
-                dedate = dt.datetime.strptime(obj.end_date, DF)
-                result[obj.id] = (dedate - dsdate).days
-        return result
-
-    category_id = fields.Many2one('product.category', _('Category'))
-    category = fields.Char(_('Category'), size=64)
-    start_date = fields.Date(_('Start Date'))
-    end_date = fields.Date(_('End Date'))
-    duration = fields.Float(compute=_get_duration, method=True, type='float', string=_('Duration'))
-    adults = fields.Integer(_('Adults'))
-    children = fields.Integer(_('Children'))
-    start_time = fields.Char(_('Start Time'), size=64)
-    start_place = fields.Char(_('Start Place'), size=255)
-    end_time = fields.Char(_('End Time'), size=64)
-    end_place = fields.Char(_('End Place'), size=255)
-    supplier_id = fields.Many2one('res.partner', _('Supplier'), domain="[('supplier', '=', True)]")
-    reservation_number = fields.Char(_('Reservation'), size=64)
-    paxs = fields.Integer(compute=_get_paxs, method=True, string=_('Paxs'), store=True)
-
-    def get_supplier(self, obj):
-        if obj.supplier_id:
-            return obj.supplier_id
-        elif obj.product_id.seller_id:
-            return obj.product_id.seller_id
-        else:
-            raise except_orm(_('Error!'),
-                             _("There is at least one sale order line without supplier"))
-
-    def get_supplier_info_id(self, cr, uid, obj, context=None):
-        supplierinfo_obj = self.pool.get('product.supplierinfo')
-        supplier = self.get_supplier(obj)
-        to_search = [
-            ('name', '=', supplier.id),
-            ('product_id', '=', obj.product_id.product_tmpl_id.id)
-        ]
-        sinfo = supplierinfo_obj.search(cr, uid, to_search, context=context)
-        return sinfo and sinfo[0] or False
-
-    def get_context_fields(self, cr, uid, context=None):
-        context_fields = {}
-        categ = self.pool.get('product.category')
-        categ_ids = categ.search(cr, uid, [('type', '=', 'normal')],
-                                 context=context)
-        categs = [c['name'] for c in categ.read(cr, uid, categ_ids, ['name'])]
-        for f, v in self.fields_get(cr, uid).items():
-            if f.split('_')[0].capitalize() in categs:
-                context_fields[f] = v
-        return context_fields
-
-    def get_context_params(self, cr, uid, line, context=None):
-        context_params = {}
-        fields = self.get_context_fields(cr, uid, context)
-        for f in fields:
-            if hasattr(line, f):
-                value = getattr(line, f)
-                if value:
-                    if fields[f]['type'] == 'many2one':
-                        context_params.update({f: value.id})
-                    else:
-                        context_params.update({f: value})
-        return context_params
-
-    def update_view_with_context_fields(self, cr, uid, res, context=None, flag=True):
-        new_fields = self.get_context_fields(cr, uid, context)
-        res['fields'].update(new_fields)
-        doc = etree.XML(res['arch'])
-        field_names = ['end_date', 'adults', 'children', 'sale_line_supplement_ids', 'supplier_id', 'product_id']
-        parent_node = doc.xpath("//group[@name='dynamic_fields']")
-        if parent_node:
-            parent_node = parent_node[0]
-            sd = doc.xpath("//field[@name='start_date']")[0]
-            ocg = sd.get('on_change', False)
-            ctx = sd.get('context', False)
-            if flag:
-                ctx = self._build_ctx(ctx, new_fields)
-            sd.set('context', ctx)
-            for field in field_names:
-                if field == 'sale_line_supplement_ids':
-                    try:
-                        ed = doc.xpath("//field[@name='" + field + "']")[0]
-                        ed.set('context', ctx)
-                    except IndexError:
-                        field = 'product_package_supplement_ids'
-                ed = doc.xpath("//field[@name='" + field + "']")[0]
-                ed.set('context', ctx)
-
-            keys = new_fields.keys()
-            keys.sort()
-            for f in keys:
-                n = etree.Element("field")
-                n.set('name', f)
-                modifiers = self._build_attr(cr, uid, f)
-                n.set('modifiers', simplejson.dumps(modifiers))
-                trigger = ", 'trigger': " + f + "}"
-                ctx_trigger = ctx[::-1].replace('}', trigger[::-1], 1)[::-1]
-                n.set('context', ctx_trigger)
-                n.set('on_change', ocg)
-                parent_node.append(n)
-            res['arch'] = etree.tostring(doc)
-        return res
-
-    def _build_attr(self, cr, uid, field):
-        category = field.split('_')[0].capitalize()
-        category_obj = self.pool.get('product.category')
-        category_id = category_obj.search(cr, uid, [('name', '=', category)])
-        return {'invisible': [('category_id', '!=', category_id[0])]}
-
-    def _build_ctx(self, base, fields):
-        body = ''
-        for f in fields:
-            body += ", '" + f + "': " + f
-        first, last = base.split("'end_date': end_date")
-        return first + "'end_date': end_date" + body + last
-
-
 class sale_order_line(models.Model):
     _name = 'sale.order.line'
     _inherit = 'sale.order.line'
@@ -587,19 +585,20 @@ class sale_order_line(models.Model):
     # def write(self, vals):
     #     return super(sale_order_line, self).create(vals)
 
-    def __init__(self, cr, uid):
-        from odoo.addons.sale.sale import sale_order_line
-        states = sale_order_line._columns['state'].selection
-        try:
-            states.remove(('request', 'Request!'))
-            states.remove(('requested', 'Requested'))
-        except:
-            pass
-        draft_idx = states.index(('draft', 'Draft'))
-        states.insert(draft_idx + 1, ('request', 'Request!'))
-        states.insert(draft_idx + 2, ('requested', 'Requested'))
-        sale_order_line._columns['state'].selection = states
-        return super(sale_order_line, self).__init__(cr, uid)
+    
+    # def __init__(self, cr, uid):
+    #     from odoo.addons.sale.models.sale import sale_order_line
+    #     states = sale_order_line._columns['state'].selection
+    #     try:
+    #         states.remove(('request', 'Request!'))
+    #         states.remove(('requested', 'Requested'))
+    #     except:
+    #         pass
+    #     draft_idx = states.index(('draft', 'Draft'))
+    #     states.insert(draft_idx + 1, ('request', 'Request!'))
+    #     states.insert(draft_idx + 2, ('requested', 'Requested'))
+    #     sale_order_line._columns['state'].selection = states
+    #     return super(sale_order_line, self).__init__(cr, uid)
 
     def to_request(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': 'request'}, context)

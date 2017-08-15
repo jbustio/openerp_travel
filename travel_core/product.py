@@ -23,7 +23,24 @@ import datetime
 from odoo import fields, models, api
 from odoo.tools.translate import _
 
+class product_rate(models.Model):
+    _name = 'product.rate'
 
+    @api.one
+    def _get_ref(self):
+        self.reference = 'PR-' + str(self.id)
+
+    reference = fields.Char(compute=_get_ref, method=True, size=256, string=_('Ref'))
+    start_date = fields.Date(_('Start'))
+    end_date = fields.Date(_('End'))
+    child = fields.Float(_('Child'))
+    per_pax = fields.Boolean(_('Per Pax'))
+
+    _defaults = {
+        'per_pax': 1
+    }
+
+    
 class product_category(models.Model):
     _name = 'product.category'
     _inherit = 'product.category'
@@ -123,24 +140,6 @@ class product_supplierinfo(models.Model):
     currency_cost_id = fields.Many2one('res.currency', _('Currency Cost'))
     _defaults = {
         'min_qty': 0.0
-    }
-
-
-class product_rate(models.Model):
-    _name = 'product.rate'
-
-    @api.one
-    def _get_ref(self):
-        self.reference = 'PR-' + str(self.id)
-
-    reference = fields.Char(compute=_get_ref, method=True, size=256, string=_('Ref'))
-    start_date = fields.Date(_('Start'))
-    end_date = fields.Date(_('End'))
-    child = fields.Float(_('Child'))
-    per_pax = fields.Boolean(_('Per Pax'))
-
-    _defaults = {
-        'per_pax': 1
     }
 
 
