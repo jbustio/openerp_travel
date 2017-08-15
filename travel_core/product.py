@@ -20,8 +20,7 @@
 ##############################################################################
 
 import datetime
-from odoo import fields, api
-from odoo.models import Model
+from odoo import fields, models, api
 from odoo.tools.translate import _
 
 

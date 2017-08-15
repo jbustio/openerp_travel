@@ -31,20 +31,20 @@ class hotels_report(osv.osv.osv):
     _description = "Hotels Report"
 
     _columns = {
-        'name': fields.char(_('Name')),
-        'start_date': fields.date(_('Start Date'), readonly=True),
-        'end_date': fields.date(_('End Date'), readonly=True),
-        'room': fields.many2one('option.value', _('Room'),
+        'name': fields.Char(_('Name')),
+        'start_date': fields.Date(_('Start Date'), readonly=True),
+        'end_date': fields.Date(_('End Date'), readonly=True),
+        'room': fields.Many2one('option.value', _('Room'),
                                 domain="[('option_type_id.code', '=', 'rt')]"),
-        'plan': fields.many2one('option.value', _('Plan'),
+        'plan': fields.Many2one('option.value', _('Plan'),
                                 domain="[('option_type_id.code', '=', 'mp')]"),
-        'simple': fields.float(_('Simple'), readonly=True),
-        'double': fields.float(_('Double'), readonly=True),
-        'supplier': fields.many2one('res.partner', _('Supplier'), readonly=True),
-        'triple': fields.float(_('Triple'), readonly=True),
-        'extra_adult': fields.float(_('Extra Adult'), readonly=True),
-        'child': fields.float(_('Child'), readonly=True),
-        'second_child': fields.float(_('Second Child'), readonly=True)
+        'simple': fields.Float(_('Simple'), readonly=True),
+        'double': fields.Float(_('Double'), readonly=True),
+        'supplier': fields.Many2one('res.partner', _('Supplier'), readonly=True),
+        'triple': fields.Float(_('Triple'), readonly=True),
+        'extra_adult': fields.Float(_('Extra Adult'), readonly=True),
+        'child': fields.Float(_('Child'), readonly=True),
+        'second_child': fields.Float(_('Second Child'), readonly=True)
     }
     _order = 'start_date asc'
 

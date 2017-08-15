@@ -25,11 +25,11 @@ class sale_report(models.Model):
     _name = "sale.report"
     _inherit = "sale.report"
     _columns = {
-        'paxs': fields.integer(_('Paxs'), readonly=True),
-        'myyear': fields.char(_('Year')),
-        'mymonth': fields.char(_('Month')),
-        'myday': fields.char(_('Day')),
-        'supplier_id': fields.many2one('res.partner', _('Supplier'))
+        'paxs': fields.Integer(_('Paxs'), readonly=True),
+        'myyear': fields.Char(_('Year')),
+        'mymonth': fields.Char(_('Month')),
+        'myday': fields.Char(_('Day')),
+        'supplier_id': fields.Many2one('res.partner', _('Supplier'))
     }
 
     # TODO: incluir la agrupacion por el campo origin en el

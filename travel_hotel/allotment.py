@@ -100,13 +100,13 @@ class product_rate_allotment(models.Model):
         
     
     _columns = {
-        'start_date': fields.date('Start date'),
-        'end_date': fields.date('End date'),
-        'suppinfo_id': fields.many2one('product.supplierinfo', 'Supplier'),
-        'room_type_id': fields.many2one('option.value', 'Room',
+        'start_date': fields.Date('Start date'),
+        'end_date': fields.Date('End date'),
+        'suppinfo_id': fields.Many2one('product.supplierinfo', 'Supplier'),
+        'room_type_id': fields.Many2one('option.value', 'Room',
                             domain="[('option_type_id.code', '=', 'rt')]"),
-        'allotment': fields.integer('Allotment'),
-        'release': fields.integer('Release')
+        'allotment': fields.Integer('Allotment'),
+        'release': fields.Integer('Release')
     }
     
     _order = 'start_date asc'
@@ -165,12 +165,12 @@ class allotment_state(models.Model):
         return list(set(res))
         
     _columns = {
-        'day': fields.date('Day'),
-        'hotel_id': fields.many2one('product.hotel', 'Hotel'),
-        'room_id': fields.many2one('option.value', 'Room',
+        'day': fields.Date('Day'),
+        'hotel_id': fields.Many2one('product.hotel', 'Hotel'),
+        'room_id': fields.Many2one('option.value', 'Room',
                               domain="[('option_type_id.code', '=', 'rt')]"),
-        'supplier_id': fields.many2one('res.partner', 'Supplier'),
-        'allotment': fields.integer('Allotment'),
+        'supplier_id': fields.Many2one('res.partner', 'Supplier'),
+        'allotment': fields.Integer('Allotment'),
         'reserved': fields.function(_reservations, methdo=True, string='Reserved', type='integer',
                                     store = {'sale.order.line': (_get_allotment_from_order, [], 10)}),
         'available': fields.function(_availability, 

@@ -31,19 +31,19 @@ class transfer_report(osv.osv.osv):
     _description = "Transfer Report"
 
     _columns = {
-        'name': fields.char(_('Name')),
-        'start_date': fields.date(_('Start Date'), readonly=True),
-        'end_date': fields.date(_('End Date'), readonly=True),
-        'min_pax': fields.integer(_('Min Pax')),
-        'max_pax': fields.integer(_('Min Pax')),
-        'vehicle_type': fields.many2one('option.value', _('Vehicle Type'),
+        'name': fields.Char(_('Name')),
+        'start_date': fields.Date(_('Start Date'), readonly=True),
+        'end_date': fields.Date(_('End Date'), readonly=True),
+        'min_pax': fields.Integer(_('Min Pax')),
+        'max_pax': fields.Integer(_('Min Pax')),
+        'vehicle_type': fields.Many2one('option.value', _('Vehicle Type'),
                                         domain="[('option_type_id.code', '=', 'vt')]"),
-        'guide': fields.many2one('option.value', 'Guide',
+        'guide': fields.Many2one('option.value', 'Guide',
                                  domain="[('option_type_id.code', '=', 'guide')]"),
-        'confort': fields.many2one('option.value', 'Confort',
+        'confort': fields.Many2one('option.value', 'Confort',
                                    domain="[('option_type_id.code', '=', 'vc')]"),
-        'price': fields.float(_('Price'), readonly=True),
-        'supplier': fields.many2one('res.partner', _('Supplier'), readonly=True),
+        'price': fields.Float(_('Price'), readonly=True),
+        'supplier': fields.Many2one('res.partner', _('Supplier'), readonly=True),
     }
     _order = 'start_date asc'
 

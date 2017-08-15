@@ -34,15 +34,15 @@ class sale_rooming(models.Model):
         return False
 
     _columns = {
-        'room': fields.selection([('simple', 'Single'),
+        'room': fields.Selection([('simple', 'Single'),
                                   ('double', 'Double'),
                                   ('triple', 'Triple')], 'Room'),
-        'adults': fields.integer('Adults'),
-        'children': fields.integer('Children'),
-        'quantity': fields.integer('Qty'),
-        'room_type_id': fields.many2one('option.value', 'Room',
+        'adults': fields.Integer('Adults'),
+        'children': fields.Integer('Children'),
+        'quantity': fields.Integer('Qty'),
+        'room_type_id': fields.Many2one('option.value', 'Room',
                                         domain="[('option_type_id.code', '=', 'rt')]"),
-        'sale_context_id': fields.many2one('sale.context', 'Context')
+        'sale_context_id': fields.Many2one('sale.context', 'Context')
     }
 
     def onchange_room(self, cr, uid, ids, room, context=None):

@@ -28,7 +28,7 @@ class product_misc(models.Model):
     _inherits = {'product.product': 'product_id'}
     _inherit = ['mail.thread']
     _columns = {
-        'product_id': fields.many2one('product.product', 'Product',
+        'product_id': fields.Many2one('product.product', 'Product',
                                       required=True, ondelete="cascade"),
         'misc_name': fields.related('product_id', 'name', type='char',
                                       string='Name', size=128, select=True,
@@ -59,7 +59,7 @@ class product_misc(models.Model):
 class product_category_change(TransientModel):
     _name = 'product.category.change'
     _columns = {
-        'category_id': fields.many2one('product.category', 'Category')
+        'category_id': fields.Many2one('product.category', 'Category')
     }
 
     def convert(self, cr, uid, ids, context=None):

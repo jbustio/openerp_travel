@@ -19,7 +19,7 @@
 #
 ##############################################################################
 
-from odoo.models import Model
+from odoo import models
 from odoo.exceptions import except_orm
 
 

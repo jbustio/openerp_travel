@@ -29,7 +29,7 @@ class product_activity(models.Model):
     _inherit = ['mail.thread']
 
     _columns = {
-        'product_id': fields.many2one('product.product', 'Product',
+        'product_id': fields.Many2one('product.product', 'Product',
                                       required=True, ondelete="cascade"),
         'activity_name': fields.related('product_id', 'name', type='char',
                                         string='Name', size=128, select=True,

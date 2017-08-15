@@ -31,11 +31,11 @@ class cars_report(osv.osv.osv):
     _description = "Cars Report"
 
     _columns = {
-        'name': fields.char(_('Name')),
-        'start_date': fields.date(_('Start Date'), readonly=True),
-        'end_date': fields.date(_('End Date'), readonly=True),
-        'price': fields.float(_('Price'), readonly=True),
-        'supplier': fields.many2one('res.partner', _('Supplier'), readonly=True)
+        'name': fields.Char(_('Name')),
+        'start_date': fields.Date(_('Start Date'), readonly=True),
+        'end_date': fields.Date(_('End Date'), readonly=True),
+        'price': fields.Float(_('Price'), readonly=True),
+        'supplier': fields.Many2one('res.partner', _('Supplier'), readonly=True)
     }
     _order = 'start_date asc'
 

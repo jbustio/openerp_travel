@@ -23,8 +23,8 @@ import time
 import simplejson
 import datetime as dt
 from lxml import etree
-from odoo import fields, api, exceptions
-from odoo.models import Model, TransientModel
+from odoo import fields, api, models, exceptions
+from odoo.models import TransientModel
 from odoo.exceptions import except_orm
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 from odoo.tools.translate import _

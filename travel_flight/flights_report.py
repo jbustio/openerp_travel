@@ -31,12 +31,12 @@ class flight_report(osv.osv.osv):
     _description = "Flight Report"
 
     _columns = {
-        'name': fields.char(_('Name')),
-        'start_date': fields.date(_('Start Date'), readonly=True),
-        'end_date': fields.date(_('End Date'), readonly=True),
-        'adults': fields.float(_('Adults'), readonly=True),
-        'child': fields.float(_('Child'), readonly=True),
-        'supplier': fields.many2one('res.partner', _('Supplier'), readonly=True)
+        'name': fields.Char(_('Name')),
+        'start_date': fields.Date(_('Start Date'), readonly=True),
+        'end_date': fields.Date(_('End Date'), readonly=True),
+        'adults': fields.Float(_('Adults'), readonly=True),
+        'child': fields.Float(_('Child'), readonly=True),
+        'supplier': fields.Many2one('res.partner', _('Supplier'), readonly=True)
     }
     _order = 'start_date asc'
 

@@ -20,8 +20,7 @@
 ##############################################################################
 
 import datetime as dt
-from odoo import fields, api
-from odoo.models import Model
+from odoo import fields, models, api
 from odoo.osv.osv import except_osv
 from odoo.tools.translate import _
 

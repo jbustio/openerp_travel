@@ -96,11 +96,11 @@ class product_car(models.Model):
 #    _name = 'product.rate'
 #    _inherit = 'product.rate'
 #    _columns = {
-#        'min_days': fields.integer('Min Days'),
-#        'max_days': fields.integer('Max Days'),
-#        'model_id': fields.many2one('option.value', 'Model',
+#        'min_days': fields.Integer('Min Days'),
+#        'max_days': fields.Integer('Max Days'),
+#        'model_id': fields.Many2one('option.value', 'Model',
 #                               domain="[('option_type_id.code', '=', 'md')]"),
-#        'transmission_id': fields.many2one('option.value', 'Transmission',
+#        'transmission_id': fields.Many2one('option.value', 'Transmission',
 #                               domain="[('option_type_id.code', '=', 'tm')]")
 #    }
 #
@@ -109,9 +109,9 @@ class product_car(models.Model):
 #    _name = 'sale.context'
 #    _inherit = 'sale.context'
 #    _columns = {
-#        'car_1_model_id': fields.many2one('option.value', 'Model',
+#        'car_1_model_id': fields.Many2one('option.value', 'Model',
 #                               domain="[('option_type_id.code', '=', 'md')]"),
-#        'car_2_transmission_id': fields.many2one('option.value',
+#        'car_2_transmission_id': fields.Many2one('option.value',
 #                                                 'Transmission',
 #                               domain="[('option_type_id.code', '=', 'tm')]")
 #    }

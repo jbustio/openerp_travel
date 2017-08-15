@@ -19,8 +19,7 @@
 #
 ##############################################################################
 
-from odoo import fields, api
-from odoo.models import Model
+from odoo import fields, api, models
 from odoo.tools.translate import _
 
 

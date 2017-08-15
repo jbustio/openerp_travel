@@ -61,8 +61,8 @@ class ResPartner(osv.Model):
     _inherit = 'res.partner'
 
     _columns = {
-        'id': fields.integer('Id', readonly=True),
-        'create_date': fields.datetime('Create Date', readonly=True),
+        'id': fields.Integer('Id', readonly=True),
+        'create_date': fields.Datetime('Create Date', readonly=True),
     }
 
 
@@ -70,10 +70,10 @@ class MergePartnerLine(osv.TransientModel):
     _name = 'base.partner.merge.line'
 
     _columns = {
-        'wizard_id': fields.many2one('base.partner.merge.automatic.wizard',
+        'wizard_id': fields.Many2one('base.partner.merge.automatic.wizard',
                                      'Wizard'),
-        'min_id': fields.integer('MinID'),
-        'aggr_ids': fields.char('Ids', required=True),
+        'min_id': fields.Integer('MinID'),
+        'aggr_ids': fields.Char('Ids', required=True),
     }
 
     _order = 'min_id asc'
@@ -89,27 +89,27 @@ class MergePartnerAutomatic(osv.TransientModel):
 
     _columns = {
         # Group by
-        'group_by_email': fields.boolean('Email'),
-        'group_by_name': fields.boolean('Name'),
-        'group_by_is_company': fields.boolean('Is Company'),
-        'group_by_vat': fields.boolean('VAT'),
-        'group_by_parent_id': fields.boolean('Parent Company'),
+        'group_by_email': fields.Boolean('Email'),
+        'group_by_name': fields.Boolean('Name'),
+        'group_by_is_company': fields.Boolean('Is Company'),
+        'group_by_vat': fields.Boolean('VAT'),
+        'group_by_parent_id': fields.Boolean('Parent Company'),
 
-        'state': fields.selection([('option', 'Option'),
+        'state': fields.Selection([('option', 'Option'),
                                    ('selection', 'Selection'),
                                    ('finished', 'Finished')],
                                   'State',
                                   readonly=True,
                                   required=True),
-        'number_group': fields.integer("Group of Contacts", readonly=True),
-        'current_line_id': fields.many2one('base.partner.merge.line', 'Current Line'),
+        'number_group': fields.Integer("Group of Contacts", readonly=True),
+        'current_line_id': fields.Many2one('base.partner.merge.line', 'Current Line'),
         'line_ids': fields.one2many('base.partner.merge.line', 'wizard_id', 'Lines'),
         'partner_ids': fields.many2many('res.partner', string='Contacts'),
-        'dst_partner_id': fields.many2one('res.partner', string='Destination Contact'),
+        'dst_partner_id': fields.Many2one('res.partner', string='Destination Contact'),
 
-        'exclude_contact': fields.boolean('A user associated to the contact'),
-        'exclude_journal_item': fields.boolean('Journal Items associated to the contact'),
-        'maximum_group': fields.integer("Maximum of Group of Contacts"),
+        'exclude_contact': fields.Boolean('A user associated to the contact'),
+        'exclude_journal_item': fields.Boolean('Journal Items associated to the contact'),
+        'maximum_group': fields.Integer("Maximum of Group of Contacts"),
     }
 
     def default_get(self, cr, uid, fields, context=None):
