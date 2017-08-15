@@ -39,6 +39,6 @@
             <field name="target">new</field>
         </record>
 
-        <menuitem id="import_data_menu" sequence="100" parent="base.menu_base_config" action="import_data_action"/>
+        <menuitem id="import_data_menu" sequence="100" parent="base.res_config_view_base" action="import_data_action"/>
     </data>
 </odoo>

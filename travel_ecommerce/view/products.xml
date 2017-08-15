@@ -14,7 +14,7 @@
         <record id="travel_product_public_category_form_view" model="ir.ui.view">
             <field name="name">travel.product.public.category.form</field>
             <field name="model">product.public.category</field>
-            <!--<field name="parent_id" ref="base.menu_base_config"/>-->
+            <!--<field name="parent_id" ref="base.res_config_view_base"/>-->
             <field name="inherit_id" ref="website_sale.product_public_category_form_view"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="after">
@@ -24,6 +24,6 @@
             </field>
         </record>
         <menuitem action="website_sale.product_public_category_action" id="travel_menu_product_public_category"
-                  parent="base.menu_base_config" sequence="10"/>
+                  parent="base.res_config_view_base" sequence="10"/>
     </data>
 </odoo>

@@ -1,16 +1,13 @@
 <?xml version="1.0"?>
 <odoo>
     <data>
-        <menuitem id="pricelist_next_id_64" name="Prices" parent="base.menu_reporting" sequence="1"
-                  groups="base.group_sale_manager"/>
-
         <record id="travel_customer_price_button" model="ir.ui.view">
             <field name="name">travel.customer.price.button</field>
             <field name="model">res.partner</field>
             <field name="inherit_id" ref="base.view_partner_form"/>
             <field name="priority" eval="40"/>
             <field name="arch" type="xml">
-                <xpath expr="//div[@name='buttons']" position="inside">
+                <xpath expr="//div[@name='button_box']" position="inside">
                     <button class="oe_inline oe_stat_button" name="set_conditions"
                             string="Customer Prices"
                             type="object"
@@ -25,7 +22,7 @@
             </field>
         </record>
 
-        <menuitem id="travel_partner_supplier_menu" parent="base.menu_base_config"
+        <menuitem id="travel_partner_supplier_menu" parent="base.res_config_view_base"
                   action="base.action_partner_supplier_form" sequence="2"/>
 
         <record id="travel_res_partner_search_view" model="ir.ui.view">
@@ -106,7 +103,7 @@
             <field name="view_id" ref="travel_option_type_tree_view"/>
         </record>
 
-        <menuitem id="travel_option_type_menu" parent="base.menu_base_config" action="travel_option_type_action"
+        <menuitem id="travel_option_type_menu" parent="base.res_config_view_base" action="travel_option_type_action"
                   sequence="5"/>
 
         <!-- Destinations -->
@@ -154,7 +151,9 @@
             <field name="view_id" ref="travel_destination_tree_view"/>
         </record>
 
-        <menuitem id="travel_destination_menu" parent="base.menu_base_config" action="travel_destination_action"
+        <menuitem id="pricelist_next_id_64" name="Prices" parent="base.menu_reporting" sequence="1"
+          groups="base.group_sale_manager"/>
+        <menuitem id="travel_destination_menu" parent="base.res_config_view_base" action="travel_destination_action"
                   sequence="4"/>
 
     </data>
