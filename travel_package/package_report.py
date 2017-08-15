@@ -71,10 +71,10 @@ class package_report(osv.osv.osv):
         """
         return group_by_str
 
-    def init(self, cr):
-        # self._table = 'pricelist_partnerinfo'
-
-        tools.sql.drop_view_if_exists(cr, self._table)
+    @api.model_cr
+    def init(self):
+        # self._table = sale_report
+        tools.drop_view_if_exists(self.env.cr, self._table)
         cr.execute("""CREATE or REPLACE VIEW %s as (
             %s
             FROM ( %s )
