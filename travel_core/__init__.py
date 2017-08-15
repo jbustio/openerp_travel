@@ -20,9 +20,9 @@
 ##############################################################################
 
 import base
-import product
 import sale
 import pricelist
+import product
 import invoice
 import report
 import reservations

@@ -26,7 +26,7 @@ from odoo.tools.translate import _
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 
-class product_car(Model):
+class product_car(models.Model):
     _name = 'product.car'
     _inherits = {'product.product': 'product_id'}
     _inherit = ['mail.thread']
@@ -92,7 +92,7 @@ class product_car(Model):
     _order = 'car_name asc'
 
 #
-# class product_rate(Model):
+# class product_rate(models.Model):
 #    _name = 'product.rate'
 #    _inherit = 'product.rate'
 #    _columns = {
@@ -105,7 +105,7 @@ class product_car(Model):
 #    }
 #
 #
-# class sale_context(Model):
+# class sale_context(models.Model):
 #    _name = 'sale.context'
 #    _inherit = 'sale.context'
 #    _columns = {

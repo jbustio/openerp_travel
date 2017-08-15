@@ -23,7 +23,7 @@ from odoo.models import Model
 from odoo import api
 
 
-class account_invoice(Model):
+class account_invoice(models.Model):
     _name = 'account.invoice'
     _inherit = 'account.invoice'
 

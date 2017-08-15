@@ -24,7 +24,7 @@ from odoo.models import Model
 from odoo import fields
 
 
-# class sale_report(Model):
+# class sale_report(models.Model):
 #     _name = "sale.report"
 #     _description = "Sales Orders Statistics"
 #     _auto = False

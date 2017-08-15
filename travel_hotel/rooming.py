@@ -23,7 +23,7 @@ from odoo.osv import fields
 from odoo.osv.orm import Model
 
 
-class sale_rooming(Model):
+class sale_rooming(models.Model):
     _name = 'sale.rooming'
 
     def _load_default_room_value(self, cr, uid, context=None):
@@ -138,7 +138,7 @@ class sale_rooming(Model):
     }
 
 
-class option_value(Model):
+class option_value(models.Model):
     _name = 'option.value'
     _inherit = 'option.value'
 

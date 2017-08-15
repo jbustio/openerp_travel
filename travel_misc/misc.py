@@ -23,7 +23,7 @@ from odoo.osv import fields
 from odoo.osv.orm import Model, TransientModel
 
 
-class product_misc(Model):
+class product_misc(models.Model):
     _name = 'product.misc'
     _inherits = {'product.product': 'product_id'}
     _inherit = ['mail.thread']

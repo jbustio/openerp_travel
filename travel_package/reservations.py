@@ -25,7 +25,7 @@ from odoo.tools.translate import _
 
 
 # TODO: Optimizar esto con sql
-class packages_reservations(Model):
+class packages_reservations(models.Model):
     _name = "packages.reservations"
     _description = "Packages Reservations"
 

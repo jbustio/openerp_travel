@@ -23,7 +23,7 @@ from odoo import fields, api
 from odoo.models import Model
 
 
-class product_flight(Model):
+class product_flight(models.Model):
     _name = 'product.flight'
     _inherits = {'product.product': 'product_id'}
     _inherit = ['mail.thread']

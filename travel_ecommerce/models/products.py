@@ -26,7 +26,7 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 from odoo.tools.translate import _
 
 
-class product_category(Model):
+class product_category(models.Model):
     _inherit = "product.category"
     _name = 'product.category'
 
@@ -49,7 +49,7 @@ class product_category(Model):
                 })
 
 
-class product_public_category(Model):
+class product_public_category(models.Model):
     _name = "product.public.category"
     _inherit = "product.public.category"
 

@@ -52,7 +52,7 @@ class tmp_sale_order_line_package_line_conf(TransientModel):
     order = fields.Integer(_('Order'))
 
 
-class sale_order_line_package_line_conf(Model):
+class sale_order_line_package_line_conf(models.Model):
     _name = 'sale.order.line.package.line.conf'
     _inherits = {'sale.context': 'sale_context_id'}
 
@@ -95,7 +95,7 @@ class sale_order_line_package_line_conf(Model):
         return res
 
 
-class sale_order_line_package_line(Model):
+class sale_order_line_package_line(models.Model):
     _name = 'sale.order.line.package.line'
     _order = 'order'
 
@@ -204,7 +204,7 @@ class sale_order_line_package_line(Model):
         }
 
 
-class supplier_price(Model):
+class supplier_price(models.Model):
     _name = 'supplier.price'
 
     sale_order_line = fields.Many2one('sale.order.line')
@@ -212,7 +212,7 @@ class supplier_price(Model):
     price = fields.Char(_('Price'))
 
 
-class sale_order(Model):
+class sale_order(models.Model):
     _name = 'sale.order'
     _inherit = 'sale.order'
 
@@ -419,7 +419,7 @@ class sale_order(Model):
             self.end_date = self.date_order
 
 
-class sale_context(Model):
+class sale_context(models.Model):
     _name = 'sale.context'
 
     @api.multi
@@ -551,7 +551,7 @@ class sale_context(Model):
         return first + "'end_date': end_date" + body + last
 
 
-class sale_order_line(Model):
+class sale_order_line(models.Model):
     _name = 'sale.order.line'
     _inherit = 'sale.order.line'
     _inherits = {'sale.context': 'sale_context_id'}

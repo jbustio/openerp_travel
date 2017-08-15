@@ -26,7 +26,7 @@ from odoo.osv.osv import except_osv
 from odoo.tools.translate import _
 
 
-class res_partner(Model):
+class res_partner(models.Model):
     _name = 'res.partner'
     _inherit = 'res.partner'
 
@@ -124,7 +124,7 @@ class res_partner(Model):
     ]
 
 
-class option_type(Model):
+class option_type(models.Model):
     _name = 'option.type'
     name = fields.Char('Name', size=64, translate=True)
     code = fields.Char('Code', size=32)
@@ -156,7 +156,7 @@ class option_type(Model):
         return super(option_type, self).unlink()
 
 
-class option_value(Model):
+class option_value(models.Model):
     _name = 'option.value'
 
     name = fields.Char(_('Name'), size=64, translate=True)
@@ -195,7 +195,7 @@ class option_value(Model):
         return res and res[0] or False
 
 
-class destination(Model):
+class destination(models.Model):
     _name = 'destination'
     code = fields.Char(_('Code'), size=8)
     name = fields.Char(_('Name'), size=128, required=True)
@@ -204,7 +204,7 @@ class destination(Model):
     child_ids = fields.One2many('destination', 'parent_id', _('Children'))
 
 
-class destination_distance(Model):
+class destination_distance(models.Model):
     _name = 'destination.distance'
     origin = fields.Many2one('destination', _('Origin'))
     target = fields.Many2one('destination', _('Target'))

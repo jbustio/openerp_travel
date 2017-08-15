@@ -19,13 +19,9 @@
 #
 ##############################################################################
 
-from odoo import tools
-from odoo.osv import fields
-from odoo.osv.orm import Model
-from odoo.tools.translate import _
+from odoo import tools, fields, models, _
 
-
-class sale_report(Model):
+class sale_report(models.Model):
     _name = "sale.report"
     _inherit = "sale.report"
     _columns = {

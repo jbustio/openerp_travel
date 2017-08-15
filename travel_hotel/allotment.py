@@ -26,7 +26,7 @@ from odoo.osv.orm import Model
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 
 
-class product_supplierinfo(Model):
+class product_supplierinfo(models.Model):
     _name = 'product.supplierinfo'
     _inherit = 'product.supplierinfo'
     _columns = {
@@ -36,7 +36,7 @@ class product_supplierinfo(Model):
     }
 
 
-class product_rate_allotment(Model):
+class product_rate_allotment(models.Model):
     _name = 'product.rate.allotment'
                 
     def create(self, cr, uid, values, context=None):
@@ -111,7 +111,7 @@ class product_rate_allotment(Model):
     
     _order = 'start_date asc'
 
-class allotment_state(Model):
+class allotment_state(models.Model):
     _name = 'allotment.state'
     
     def _availability(self, cr, uid, ids, field, value, args, context=None):

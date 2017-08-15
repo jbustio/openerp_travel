@@ -23,7 +23,7 @@ from odoo.osv import fields
 from odoo.osv.orm import Model
 
 
-class product_activity(Model):
+class product_activity(models.Model):
     _name = 'product.activity'
     _inherits = {'product.product': 'product_id'}
     _inherit = ['mail.thread']

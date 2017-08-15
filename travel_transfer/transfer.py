@@ -23,7 +23,7 @@ from odoo import fields, api
 from odoo.models import Model
 
 
-class product_transfer(Model):
+class product_transfer(models.Model):
     _name = 'product.transfer'
     _inherits = {'product.product': 'product_id'}
     _inherit = ['mail.thread']
@@ -102,7 +102,7 @@ class product_transfer(Model):
     _order = 'transfer_name asc'
 
 
-class product_rate(Model):
+class product_rate(models.Model):
     _name = 'product.rate'
     _inherit = 'product.rate'
 
@@ -116,7 +116,7 @@ class product_rate(Model):
                                  domain="[('option_type_id.code', '=', 'vc')]")
 
 
-class sale_context(Model):
+class sale_context(models.Model):
     _name = 'sale.context'
     _inherit = 'sale.context'
 

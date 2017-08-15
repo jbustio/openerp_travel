@@ -29,7 +29,7 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 ROOM = {1: 'simple', 2: 'price', 3: 'triple'}
 
 
-class product_package_line(Model):
+class product_package_line(models.Model):
     _name = 'product.package.line'
 
     _order = 'order'
@@ -228,7 +228,7 @@ class product_package_line(Model):
         }
 
 
-class product_package(Model):
+class product_package(models.Model):
     _name = 'product.package'
     _inherits = {'product.product': 'product_id'}
     _inherit = ['mail.thread']
@@ -283,7 +283,7 @@ class product_package(Model):
     _order = 'package_name asc'
 
 
-class product_rate(Model):
+class product_rate(models.Model):
     _name = 'product.rate'
     _inherit = 'product.rate'
 
@@ -291,12 +291,12 @@ class product_rate(Model):
     max_paxs = fields.Integer(_('Max Paxs'))
 
 
-class sale_context(Model):
+class sale_context(models.Model):
     _name = 'sale.context'
     _inherit = 'sale.context'
 
 
-class product_package_line_conf(Model):
+class product_package_line_conf(models.Model):
     _name = 'product.package.line.conf'
     _inherits = {'sale.context': 'sale_context_id'}
 

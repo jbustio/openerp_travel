@@ -34,7 +34,7 @@ from odoo.tools.translate import _
 apis = ['best_day']
 
 
-class api_model(Model):
+class api_model(models.Model):
     _name = 'api.model'
     _rec_name = 'api'
 

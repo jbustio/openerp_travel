@@ -26,7 +26,7 @@ from odoo import fields
 from odoo.models import Model, TransientModel
 from odoo.tools.translate import _
 import openerp.addons.decimal_precision as dp
-import ho.pisa as pisa
+#import ho.pisa as pisa
 import time
 import xlwt
 import base64
@@ -63,7 +63,7 @@ def remove_wrong_characters(string):
         return string
 
 
-class product_pricelist(Model):
+class product_pricelist(models.Model):
     _name = 'product.pricelist'
     _inherit = 'product.pricelist'
 
@@ -530,7 +530,7 @@ class product_pricelist(Model):
         return results
 
 
-class product_pricelist_item(Model):
+class product_pricelist_item(models.Model):
     _inherit = 'product.pricelist.item'
 
     margin_per_pax = fields.Float('Margin per Pax',
@@ -556,80 +556,80 @@ class customer_price(TransientModel):
     pdf_file = fields.Binary('PDF File')
     pdf_name = fields.Char('PDF Name', readonly=True, default='Price_customers.pdf')
 
-    @api.multi
-    def export_prices(self):
-        wb = xlwt.Workbook()
-        body = """
-                <html>
-                  <head>
-                    <meta name="pdfkit-page-size" content="Legal"/>
-                    <meta name="pdfkit-orientation" content="Landscape"/>
-                  </head>
+    # @api.multi
+    # def export_prices(self):
+    #     wb = xlwt.Workbook()
+    #     body = """
+    #             <html>
+    #               <head>
+    #                 <meta name="pdfkit-page-size" content="Legal"/>
+    #                 <meta name="pdfkit-orientation" content="Landscape"/>
+    #               </head>
 
-                  """
-        final = """
-                </html>
-                """
+    #               """
+    #     final = """
+    #             </html>
+    #             """
 
-        obj = self[0]
+    #     obj = self[0]
 
-        if obj.category and obj.supplier:
-            category_name = obj.category.name.lower()
-            product_category = self.env['product.' + category_name]
-            supplier_info = self.env['product.supplierinfo']
-            supplier_infos = supplier_info.search([('name', '=', obj.supplier.id)])
-            products = product_category.search([('seller_ids', '=', [x.id for x in supplier_infos])])
-            supplier_infos = supplier_info.search(
-                [('product_tmpl_id', '=', [x.product_id.product_tmpl_id.id for x in products]),
-                 ('name', '=', obj.supplier.id)])
-            pricelist_partnerinfo = self.env['pricelist.partnerinfo']
-            pricelist_partnerinfo_elmts = pricelist_partnerinfo.search(
-                [('suppinfo_id', 'in', [x.id for x in supplier_infos])])
+    #     if obj.category and obj.supplier:
+    #         category_name = obj.category.name.lower()
+    #         product_category = self.env['product.' + category_name]
+    #         supplier_info = self.env['product.supplierinfo']
+    #         supplier_infos = supplier_info.search([('name', '=', obj.supplier.id)])
+    #         products = product_category.search([('seller_ids', '=', [x.id for x in supplier_infos])])
+    #         supplier_infos = supplier_info.search(
+    #             [('product_tmpl_id', '=', [x.product_id.product_tmpl_id.id for x in products]),
+    #              ('name', '=', obj.supplier.id)])
+    #         pricelist_partnerinfo = self.env['pricelist.partnerinfo']
+    #         pricelist_partnerinfo_elmts = pricelist_partnerinfo.search(
+    #             [('suppinfo_id', 'in', [x.id for x in supplier_infos])])
 
-            fields = self.get_category_price_fields(category=category_name)
-            product_pricelist_item = self.env['product.pricelist.item']
-            product_pricelist_item_elmnts = product_pricelist_item.search([('price_version_id', '=', obj.pricelist.id)])
-            if fields and pricelist_partnerinfo_elmts:
-                for pricelist in product_pricelist_item_elmnts:
-                    ws = wb.add_sheet(str(remove_wrong_characters(pricelist.name)), cell_overwrite_ok=True)
-                    body += """
-                    <table>
-                    """
-                    ws, body = self.write_prices(ws, fields, category_name, obj.start_date, obj.end_date,
-                                                 obj.supplier.name,
-                                                 pricelist_partnerinfo_elmts, pricelist, body)
-                    body += """
-                    </table>
-                    """
-                body += """
-                </tbody>
-                """
-                body += final
+    #         fields = self.get_category_price_fields(category=category_name)
+    #         product_pricelist_item = self.env['product.pricelist.item']
+    #         product_pricelist_item_elmnts = product_pricelist_item.search([('price_version_id', '=', obj.pricelist.id)])
+    #         if fields and pricelist_partnerinfo_elmts:
+    #             for pricelist in product_pricelist_item_elmnts:
+    #                 ws = wb.add_sheet(str(remove_wrong_characters(pricelist.name)), cell_overwrite_ok=True)
+    #                 body += """
+    #                 <table>
+    #                 """
+    #                 ws, body = self.write_prices(ws, fields, category_name, obj.start_date, obj.end_date,
+    #                                              obj.supplier.name,
+    #                                              pricelist_partnerinfo_elmts, pricelist, body)
+    #                 body += """
+    #                 </table>
+    #                 """
+    #             body += """
+    #             </tbody>
+    #             """
+    #             body += final
 
-                f = cStringIO.StringIO()
-                f2 = cStringIO.StringIO()
-                options = {
-                    'page-size': 'Letter',
-                    'margin-top': '0.75in',
-                    'margin-right': '0.75in',
-                    'margin-bottom': '0.75in',
-                    'margin-left': '0.75in',
-                    'encoding': "UTF-8",
-                    'no-outline': None
-                }
-                pisa.pisaDocument(body.encode("ISO-8859-1"), f2)
-                wb.save(f)
-                obj.write({'excel_file': base64.encodestring(f.getvalue())})
-                obj.write({'pdf_file': base64.encodestring(f2.getvalue())})
-        return {
-            'name': 'Export Prices',
-            'type': 'ir.actions.act_window',
-            'view_type': 'form',
-            'view_mode': 'form',
-            'res_model': 'customer.price',
-            'res_id': obj.id,
-            'target': 'new'
-        }
+    #             f = cStringIO.StringIO()
+    #             f2 = cStringIO.StringIO()
+    #             options = {
+    #                 'page-size': 'Letter',
+    #                 'margin-top': '0.75in',
+    #                 'margin-right': '0.75in',
+    #                 'margin-bottom': '0.75in',
+    #                 'margin-left': '0.75in',
+    #                 'encoding': "UTF-8",
+    #                 'no-outline': None
+    #             }
+    #             pisa.pisaDocument(body.encode("ISO-8859-1"), f2)
+    #             wb.save(f)
+    #             obj.write({'excel_file': base64.encodestring(f.getvalue())})
+    #             obj.write({'pdf_file': base64.encodestring(f2.getvalue())})
+    #     return {
+    #         'name': 'Export Prices',
+    #         'type': 'ir.actions.act_window',
+    #         'view_type': 'form',
+    #         'view_mode': 'form',
+    #         'res_model': 'customer.price',
+    #         'res_id': obj.id,
+    #         'target': 'new'
+    #     }
 
     # TODO: sort fields just for first index
     def get_category_price_fields(self, category):

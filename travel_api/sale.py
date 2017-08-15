@@ -30,14 +30,14 @@ from odoo.exceptions import except_orm
 from odoo.tools.translate import _
 
 
-class sale_order(Model):
+class sale_order(models.Model):
     _name = 'sale.order'
     _inherit = 'sale.order'
 
     order_destination_id = fields.Many2one('destination', 'Country', required=True)
 
 
-class sale_context(Model):
+class sale_context(models.Model):
     _name = 'sale.context'
     _inherit = 'sale.context'
 
@@ -125,7 +125,7 @@ class sale_context(Model):
         return res
 
 
-class sale_order_line(Model):
+class sale_order_line(models.Model):
     _name = 'sale.order.line'
     _inherit = 'sale.order.line'
 
@@ -214,7 +214,7 @@ class sale_order_line(Model):
             return res
 
 
-class res_partner(Model):
+class res_partner(models.Model):
     _name = 'res.partner'
     _inherit = 'res.partner'
 

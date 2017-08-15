@@ -25,7 +25,7 @@ from odoo.models import Model
 from odoo.tools.translate import _
 
 
-class product_category(Model):
+class product_category(models.Model):
     _name = 'product.category'
     _inherit = 'product.category'
 
@@ -43,8 +43,28 @@ class product_category(Model):
         'voucher_name': 'default_travel_voucher_report'
     }
 
+class pricelist_partnerinfo(models.Model):
+    _name = 'pricelist.partnerinfo'
+    _rec_name = 'reference'
+    #_inherit = 'pricelist.partnerinfo'
+    _inherits = {'product.rate': 'product_rate_id'}
+    product_rate_id = fields.Many2one('product.rate', _('Product Rate'),
+                                      ondelete="cascade", select=True)
+    rate_start_date = fields.Date('product_rate_id.start_date',
+                                  store=True)
+    product_id = fields.Many2one('suppinfo_id.product_id',
+                                 string=_('Product'),
+                                 relation='product.template')
+    sequence = fields.Integer(_('Sequence'))
 
-class product_product(Model):
+    _defaults = {
+        'min_quantity': 0.0,
+        'sequence': 0
+    }
+    _order = 'rate_start_date'
+    
+
+class product_product(models.Model):
     _name = 'product.product'
     _inherit = 'product.product'
 
@@ -95,7 +115,7 @@ class product_product(Model):
         return getattr(klas, 'price_get_partner')(*args)
 
 
-class product_supplierinfo(Model):
+class product_supplierinfo(models.Model):
     _name = 'product.supplierinfo'
     _inherit = 'product.supplierinfo'
 
@@ -107,7 +127,7 @@ class product_supplierinfo(Model):
     }
 
 
-class product_rate(Model):
+class product_rate(models.Model):
     _name = 'product.rate'
 
     @api.one
@@ -125,7 +145,7 @@ class product_rate(Model):
     }
 
 
-class product_rate_supplement(Model):
+class product_rate_supplement(models.Model):
     _name = 'product.rate.supplement'
     supplement_id = fields.Many2one('option.value', _('Supplement'),
                                     domain="[('option_type_id.code', '=', 'sup')]")
@@ -136,23 +156,3 @@ class product_rate_supplement(Model):
     rate_ids = fields.Many2many('product.rate', 'supplements_rates_rel',
                                 'supplement_id', 'rate_id', _('Rates'))
 
-
-class pricelist_partnerinfo(Model):
-    _name = 'pricelist.partnerinfo'
-    _rec_name = 'reference'
-    _inherit = 'pricelist.partnerinfo'
-    _inherits = {'product.rate': 'product_rate_id'}
-    product_rate_id = fields.Many2one('product.rate', _('Product Rate'),
-                                      ondelete="cascade", select=True)
-    rate_start_date = fields.Date('product_rate_id.start_date',
-                                  store=True)
-    product_id = fields.Many2one('suppinfo_id.product_id',
-                                 string=_('Product'),
-                                 relation='product.template')
-    sequence = fields.Integer(_('Sequence'))
-
-    _defaults = {
-        'min_quantity': 0.0,
-        'sequence': 0
-    }
-    _order = 'rate_start_date'

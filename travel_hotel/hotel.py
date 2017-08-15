@@ -28,7 +28,7 @@ from odoo.tools.translate import _
 ROOM = {1: 'simple', 2: 'price', 3: 'triple'}
 
 
-class product_hotel(Model):
+class product_hotel(models.Model):
     _name = 'product.hotel'
     _inherits = {'product.product': 'product_id'}
     _inherit = ['mail.thread']
@@ -126,7 +126,7 @@ class product_hotel(Model):
     _order = 'hotel_name asc'
 
 
-class product_rate(Model):
+class product_rate(models.Model):
     _name = 'product.rate'
     _inherit = 'product.rate'
 
