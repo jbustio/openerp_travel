@@ -28,7 +28,7 @@ from odoo.models import Model, TransientModel
 from odoo.exceptions import except_orm
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT as DF
 from odoo.tools.translate import _
-import openerp.addons.decimal_precision as dp
+import odoo.addons.decimal_precision as dp
 
 
 class tmp_sale_order_line_package_line_conf(TransientModel):

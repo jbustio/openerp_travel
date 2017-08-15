@@ -20,12 +20,10 @@
 ##############################################################################
 
 
-from odoo import api, tools
+from odoo import api, fields, models, _, tools
 from odoo.exceptions import except_orm
-from odoo import fields
-from odoo.models import Model, TransientModel
-from odoo.tools.translate import _
-import openerp.addons.decimal_precision as dp
+from odoo.models import  TransientModel
+import odoo.addons.decimal_precision as dp
 #import ho.pisa as pisa
 import time
 import xlwt

@@ -20,7 +20,7 @@
 ##############################################################################
 
 from odoo.osv import fields
-import openerp.osv as osv
+import odoo.osv as osv
 from odoo.tools.translate import _
 from odoo import tools
 
